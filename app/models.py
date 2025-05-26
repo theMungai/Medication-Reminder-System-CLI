@@ -3,15 +3,18 @@ from sqlalchemy.orm import declarative_base, relationship
 
 Base = declarative_base()
 
+# User model
 class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True)
     name = Column(String(100), nullable=False)
     age = Column(Integer, nullable=False)
+    email = Column(String(120), nullable=False, unique=True)
 
     medications = relationship("Medication", back_populates="user")
 
+# Medication model
 class Medication(Base):
     __tablename__ = "medications"
 
@@ -27,6 +30,7 @@ class Medication(Base):
     times = relationship("MedicationTime", back_populates="medication")
     doses = relationship("DoseLog", back_populates="medication")
 
+# MedicationTime model
 class MedicationTime(Base):
     __tablename__ = "medication_times"
 
@@ -36,6 +40,7 @@ class MedicationTime(Base):
 
     medication = relationship("Medication", back_populates="times")
 
+# Dosage model
 class DoseLog(Base):
     __tablename__ = "dose_logs"
 
