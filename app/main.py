@@ -3,15 +3,17 @@ from models import User, Medication, DoseLog
 from datetime import datetime
 
 def add_user():
-    user_id = input("User Id: ")
     name = input("Enter your name: ")
-    age = input("Enter your age: ")
+    age = int(input("Enter your age: "))
     email = input("Enter your email: ")
 
-    new_user = User(id = user_id, name = name, age = age,email=email )
-    session.add(new_user)
+    user = User(name=name, age=age, email=email)
+    session.add(user)
     session.commit()
-    print(f"{name} added successfully.")
+
+    print(f"Id: {user.id}, Name: {user.name}, Age: {user.age} years old, Email: {user.email}")
+    print(f"{user.name} added successfully.")
+
 
 def add_medication():
     user_id = input("Enter user ID: ")
@@ -82,26 +84,29 @@ def view_dose_history():
 def main():
     while True:
         print("\n***** Medication Reminder System *****")
-        print("1. Add New Medication")
-        print("2. View Medications")
-        print("3. Check Due Medications (Reminders)")
-        print("4. Mark Medication as Taken")
-        print("5. View Dose History")
-        print("6. Exit")
+        print("1. Add New User")
+        print("2. Add New Medication")
+        print("3. View Medications")
+        print("4. Check Due Medications (Reminders)")
+        print("5. Mark Medication as Taken")
+        print("6. View Dose History")
+        print("7. Exit")
 
         choice = input("Enter your choice: ")
 
         if choice == "1":
-            add_medication()
+            add_user()
         elif choice == "2":
-            view_medications()
+            add_medication()
         elif choice == "3":
-            check_due_medications()
+            view_medications()
         elif choice == "4":
-            mark_medication_taken()
+            check_due_medications()
         elif choice == "5":
-            view_dose_history()
+            mark_medication_taken()
         elif choice == "6":
+            view_dose_history()
+        elif choice == "7":
             print("Goodbye!")
             break
         else:
