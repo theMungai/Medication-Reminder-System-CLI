@@ -1,6 +1,7 @@
 from database import session
 from models import User, Medication, DoseLog
 from datetime import datetime
+from utils import generate_dose_logs
 
 def add_user():
     name = input("Enter your name: ")
@@ -16,29 +17,37 @@ def add_user():
 
 
 def add_medication():
-    user_id = input("Enter user ID: ")
-    user = session.query(User).filter(User.id == user_id).first()
+    user_id = int(input("Enter user ID: "))
+    user = session.query(User).filter_by(id=user_id).first()
+
     if not user:
         print("User not found.")
         return
 
-    name = input("Medication name: ")
-    dosage = input("Dosage: ")
-    freq = int(input("Frequency (hours): "))
-    start_date = input("Start date (YYYY-MM-DD): ")
-    end_date = input("End date (YYYY-MM-DD or leave blank): ")
+    name = input("Enter medication name: ")
+    dosage = input("Enter dosage (e.g., 500mg): ")
+    frequency = int(input("Enter frequency in hours: "))
+    start_date = input("Enter start date (YYYY-MM-DD): ")
+    end_date = input("Enter end date (YYYY-MM-DD) or leave blank: ")
 
     medication = Medication(
         user_id=user.id,
         name=name,
         dosage=dosage,
-        frequency_hours=freq,
+        frequency_hours=frequency,
         start_date=datetime.strptime(start_date, "%Y-%m-%d").date(),
-        end_date=datetime.strptime(end_date, "%Y-%m-%d").date() if end_date else None,
+        end_date=datetime.strptime(end_date, "%Y-%m-%d").date() if end_date else None
     )
+
     session.add(medication)
     session.commit()
-    print(f"Medication '{name}' added for user {user.name}.")
+
+    # 🔁 Generate dose logs now
+    generate_dose_logs(medication)
+
+    print(f"Medication '{name}' added and dose schedule generated.\n")
+
+
 
 def view_medications():
     meds = session.query(Medication).all()
