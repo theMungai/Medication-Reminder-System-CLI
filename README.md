@@ -28,6 +28,14 @@ The **Medication Reminder System** is a command-line interface (CLI) application
 | CLI Input     | `input()` + print      |
 | Virtual Env   | `venv` or `virtualenv` |
 
+
+
+## 🧱 Database Schema (ERD)
+
+ERD Link : https://dbdiagram.io/d/683412dcb9f7446da3223df1
+
+![ERD Diagram](ERD-Diargram.png)
+
 ---
 
 ## 📂 Project Structure
