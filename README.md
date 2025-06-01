@@ -26,7 +26,7 @@ The **Medication Reminder System** is a command-line interface (CLI) application
 | ORM           | SQLAlchemy             |
 | Migrations    | Alembic                |
 | CLI Input     | `input()` + print      |
-| Virtual Env   | `venv` or `virtualenv` |
+| Virtual Env   | `virtualenv`           |
 
 
 
