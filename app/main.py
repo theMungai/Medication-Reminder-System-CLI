@@ -42,7 +42,6 @@ def add_medication():
     session.add(medication)
     session.commit()
 
-    # 🔁 Generate dose logs now
     generate_dose_logs(medication)
 
     print(f"Medication '{name}' added and dose schedule generated.\n")
